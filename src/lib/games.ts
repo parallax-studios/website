@@ -26,11 +26,16 @@ export function getGameContent(slug: string): GameContent | null {
   const sections = parsePitchSections(pitchRaw);
 
   const docNames = [
-    { name: 'Game Design', slug: 'game-design' },
-    { name: 'Narrative Bible', slug: 'narrative-bible' },
-    { name: 'Art Direction', slug: 'art-direction' },
-    { name: 'Sound Design', slug: 'sound-design' },
-    { name: 'Technical Architecture', slug: 'technical-architecture' },
+    { name: 'Game Design', slug: 'game-design', agent: 'REED' },
+    { name: 'Narrative Bible', slug: 'narrative-bible', agent: 'NOVA' },
+    { name: 'Art Direction', slug: 'art-direction', agent: 'PIXEL' },
+    { name: 'Sound Design', slug: 'sound-design', agent: 'ECHO' },
+    { name: 'Technical Architecture', slug: 'technical-architecture', agent: 'BYTE' },
+    { name: 'Level Design', slug: 'level-design', agent: 'GRID' },
+    { name: 'Production Plan', slug: 'production-plan', agent: 'CLOCK' },
+    { name: 'QA Plan', slug: 'qa-plan', agent: 'CRASH' },
+    { name: 'Marketing Plan', slug: 'marketing-plan', agent: 'HYPE' },
+    { name: 'Release Plan', slug: 'release-plan', agent: 'SHIP' },
   ];
 
   const docs = docNames.map(d => ({

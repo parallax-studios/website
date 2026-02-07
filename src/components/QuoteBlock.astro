@@ -1,0 +1,32 @@
+---
+interface Props {
+  quote: string;
+  accent?: string;
+}
+
+const { quote, accent } = Astro.props;
+---
+
+<section class="py-20 px-6">
+  <div class="max-w-4xl mx-auto">
+    <blockquote class="relative">
+      <span
+        class="absolute -top-8 -left-4 text-7xl font-bold opacity-20 select-none"
+        style={accent ? `color: ${accent};` : `color: var(--color-phosphor);`}
+      >
+        &ldquo;
+      </span>
+      <p
+        class="font-[family-name:var(--font-display)] text-2xl md:text-3xl lg:text-4xl font-medium leading-snug italic text-[var(--color-bone)]"
+      >
+        {quote}
+      </p>
+      <span
+        class="absolute -bottom-12 -right-2 text-7xl font-bold opacity-20 select-none"
+        style={accent ? `color: ${accent};` : `color: var(--color-phosphor);`}
+      >
+        &rdquo;
+      </span>
+    </blockquote>
+  </div>
+</section>

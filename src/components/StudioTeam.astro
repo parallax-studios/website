@@ -1,0 +1,48 @@
+---
+import type { TeamMember } from '../lib/types';
+
+const team: TeamMember[] = [
+  { codename: 'REED', role: 'Game Designer', catchphrase: "What's the loop?", philosophy: 'Systems-first, loop-obsessed. Every design starts with the 30-second verb.' },
+  { codename: 'NOVA', role: 'Narrative Designer', catchphrase: 'Every mechanic tells a story.', philosophy: 'Character-first, theme-driven. The world wound defines everything.' },
+  { codename: 'PIXEL', role: 'Art Director', catchphrase: 'Does this read at a glance?', philosophy: 'Reference-heavy, readability-obsessed. If you can\'t screenshot it, it doesn\'t exist.' },
+  { codename: 'ECHO', role: 'Sound Designer', catchphrase: 'Audio IS game feel.', philosophy: 'Sensory and sparse. The silence between sounds matters more than the sounds.' },
+  { codename: 'BYTE', role: 'Lead Programmer', catchphrase: 'Profile before you optimize.', philosophy: 'Pragmatic, ships-first. The best code is the code that shipped.' },
+  { codename: 'GRID', role: 'Level Designer', catchphrase: 'Where does the player LOOK?', philosophy: 'Spatial thinker. Every room is a question; every path is an answer.' },
+  { codename: 'CLOCK', role: 'Producer', catchphrase: 'Cut scope, not corners.', philosophy: 'Scope realist. A shipped game beats a perfect design document.' },
+  { codename: 'CRASH', role: 'QA Lead', catchphrase: "Define 'works'.", philosophy: 'Professional skeptic. If it hasn\'t been broken, it hasn\'t been tested.' },
+  { codename: 'HYPE', role: 'Marketing', catchphrase: "What's the GIF?", philosophy: 'Hook-driven, audience-first. If you can\'t sell it in 5 seconds, redesign it.' },
+  { codename: 'SHIP', role: 'Release Manager', catchphrase: "What's the rollback plan?", philosophy: 'Checklist-obsessed. Hope is not a deployment strategy.' },
+];
+---
+
+<section class="py-20 px-6">
+  <div class="max-w-7xl mx-auto">
+    <h2 class="font-[family-name:var(--font-display)] text-3xl md:text-4xl font-bold mb-4 text-center">
+      The Team
+    </h2>
+    <p class="text-center text-[var(--color-muted)] mb-16 max-w-xl mx-auto">
+      10 specialist agents. Each with a distinct voice, philosophy, and the scars to prove it.
+    </p>
+
+    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5 gap-4">
+      {team.map(member => (
+        <div class="group rounded-xl border border-white/5 bg-[var(--color-void-light)] p-5 hover:border-[var(--color-phosphor)]/20 transition-all">
+          <div class="flex items-baseline gap-2 mb-3">
+            <span class="font-[family-name:var(--font-display)] text-lg font-bold text-[var(--color-phosphor)]">
+              {member.codename}
+            </span>
+          </div>
+          <p class="text-xs text-[var(--color-dim)] font-[family-name:var(--font-mono)] uppercase tracking-wider mb-3">
+            {member.role}
+          </p>
+          <p class="text-sm text-[var(--color-muted)] leading-relaxed mb-3">
+            {member.philosophy}
+          </p>
+          <p class="text-xs italic text-[var(--color-dim)]">
+            &ldquo;{member.catchphrase}&rdquo;
+          </p>
+        </div>
+      ))}
+    </div>
+  </div>
+</section>

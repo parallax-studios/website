@@ -1,0 +1,31 @@
+---
+const pathname = Astro.url.pathname;
+const links = [
+  { href: '/', label: 'Home' },
+  { href: '/games', label: 'Games' },
+  { href: '/studio', label: 'Studio' },
+];
+---
+
+<header class="fixed top-0 left-0 right-0 z-50 backdrop-blur-md bg-[var(--color-void)]/80 border-b border-white/5">
+  <nav class="max-w-7xl mx-auto px-6 h-16 flex items-center justify-between">
+    <a href="/" class="font-[family-name:var(--font-display)] text-xl font-bold tracking-wider text-[var(--color-bone)] hover:text-[var(--color-phosphor)] transition-colors">
+      PARALLAX
+    </a>
+    <div class="flex items-center gap-8">
+      {links.map(link => (
+        <a
+          href={link.href}
+          class:list={[
+            'text-sm font-medium tracking-wide transition-colors',
+            pathname === link.href
+              ? 'text-[var(--color-phosphor)]'
+              : 'text-[var(--color-muted)] hover:text-[var(--color-bone)]',
+          ]}
+        >
+          {link.label}
+        </a>
+      ))}
+    </div>
+  </nav>
+</header>

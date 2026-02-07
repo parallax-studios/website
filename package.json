@@ -1,0 +1,17 @@
+{
+  "name": "parallax-studios-website",
+  "version": "1.0.0",
+  "description": "Parallax Studios — 14 games. 14 industries. Every angle.",
+  "type": "module",
+  "scripts": {
+    "dev": "astro dev",
+    "build": "astro build",
+    "preview": "astro preview"
+  },
+  "dependencies": {
+    "@tailwindcss/vite": "^4.1.18",
+    "astro": "^5.17.1",
+    "gsap": "^3.14.2",
+    "tailwindcss": "^4.1.18"
+  }
+}

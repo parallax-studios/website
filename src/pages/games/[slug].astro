@@ -1,0 +1,175 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import GameHero from '../../components/GameHero.astro';
+import QuoteBlock from '../../components/QuoteBlock.astro';
+import { getAllGames, getGameContent, getAdjacentGames } from '../../lib/games';
+
+export function getStaticPaths() {
+  const games = getAllGames();
+  return games.map(game => ({
+    params: { slug: game.slug },
+  }));
+}
+
+const { slug } = Astro.params;
+const content = getGameContent(slug!);
+if (!content) return Astro.redirect('/404');
+
+const { meta, sections, docs } = content;
+const { prev, next } = getAdjacentGames(slug!);
+
+function stripMarkdownMeta(md: string): string {
+  return md
+    .replace(/^\*\[.*?\]\*\s*/gm, '')
+    .replace(/^---\s*$/gm, '')
+    .trim();
+}
+
+function simpleMarkdown(text: string): string {
+  return text
+    .replace(/^### (.+)$/gm, '<h3>$1</h3>')
+    .replace(/^## (.+)$/gm, '<h3>$1</h3>')
+    .replace(/^\> (.+)$/gm, '<blockquote><p>$1</p></blockquote>')
+    .replace(/\*\*(.+?)\*\*/g, '<strong>$1</strong>')
+    .replace(/\*(.+?)\*/g, '<em>$1</em>')
+    .replace(/^\d+\. (.+)$/gm, '<li>$1</li>')
+    .replace(/^- (.+)$/gm, '<li>$1</li>')
+    .replace(/((?:<li>.*<\/li>\n?)+)/g, '<ul>$1</ul>')
+    .replace(/\n{2,}/g, '</p><p>')
+    .replace(/^([^<\n].+)$/gm, '<p>$1</p>')
+    .replace(/<p><\/p>/g, '');
+}
+---
+
+<BaseLayout title={meta.title} description={meta.elevator} accent={meta.accent}>
+  <GameHero game={meta} />
+
+  <!-- Scroll-stop quote -->
+  <QuoteBlock quote={meta.scrollStop} accent={meta.accent} />
+
+  <!-- Pitch Sections -->
+  <div class="max-w-4xl mx-auto px-6 space-y-16 pb-16" style={`--game-accent: ${meta.accent};`}>
+
+    {sections.hook && (
+      <section>
+        <div class="flex items-center gap-3 mb-6">
+          <span class="font-[family-name:var(--font-mono)] text-xs tracking-widest" style={`color: ${meta.accent};`}>THE HOOK</span>
+          <span class="flex-1 h-px bg-white/5"></span>
+        </div>
+        <div class="prose" set:html={simpleMarkdown(stripMarkdownMeta(sections.hook))} />
+      </section>
+    )}
+
+    {sections.core && (
+      <section>
+        <div class="flex items-center gap-3 mb-6">
+          <span class="font-[family-name:var(--font-mono)] text-xs tracking-widest" style={`color: ${meta.accent};`}>THE CORE</span>
+          <span class="flex-1 h-px bg-white/5"></span>
+        </div>
+        <div class="prose" set:html={simpleMarkdown(stripMarkdownMeta(sections.core))} />
+      </section>
+    )}
+
+    {sections.heart && (
+      <section>
+        <div class="flex items-center gap-3 mb-6">
+          <span class="font-[family-name:var(--font-mono)] text-xs tracking-widest" style={`color: ${meta.accent};`}>THE HEART</span>
+          <span class="flex-1 h-px bg-white/5"></span>
+        </div>
+        <div class="prose" set:html={simpleMarkdown(stripMarkdownMeta(sections.heart))} />
+      </section>
+    )}
+
+    {sections.market && (
+      <section>
+        <div class="flex items-center gap-3 mb-6">
+          <span class="font-[family-name:var(--font-mono)] text-xs tracking-widest" style={`color: ${meta.accent};`}>THE MARKET</span>
+          <span class="flex-1 h-px bg-white/5"></span>
+        </div>
+        <div class="prose" set:html={simpleMarkdown(stripMarkdownMeta(sections.market))} />
+      </section>
+    )}
+
+    {sections.scope && (
+      <section>
+        <div class="flex items-center gap-3 mb-6">
+          <span class="font-[family-name:var(--font-mono)] text-xs tracking-widest" style={`color: ${meta.accent};`}>THE SCOPE</span>
+          <span class="flex-1 h-px bg-white/5"></span>
+        </div>
+        <div class="prose" set:html={simpleMarkdown(stripMarkdownMeta(sections.scope))} />
+      </section>
+    )}
+
+    <!-- Document links -->
+    <section>
+      <div class="flex items-center gap-3 mb-6">
+        <span class="font-[family-name:var(--font-mono)] text-xs tracking-widest" style={`color: ${meta.accent};`}>DOCUMENTS</span>
+        <span class="flex-1 h-px bg-white/5"></span>
+      </div>
+      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3">
+        {docs.map(doc => (
+          <div
+            class:list={[
+              'block rounded-lg border p-4 transition-all',
+              doc.available
+                ? 'border-white/10 bg-[var(--color-void-light)] hover:border-white/20 hover:bg-[var(--color-void-lighter)]'
+                : 'border-white/5 bg-[var(--color-void)] opacity-40',
+            ]}
+          >
+            <p class="text-sm font-medium text-[var(--color-bone)]">{doc.name}</p>
+            <p class="text-xs text-[var(--color-dim)] mt-1">
+              {doc.available ? 'Available' : 'Coming soon'}
+            </p>
+          </div>
+        ))}
+      </div>
+    </section>
+
+    <!-- Prev/Next navigation -->
+    <nav class="flex items-center justify-between pt-12 border-t border-white/5">
+      {prev ? (
+        <a href={`/games/${prev.slug}`} class="group flex items-center gap-3">
+          <svg class="w-4 h-4 text-[var(--color-dim)] group-hover:text-[var(--color-phosphor)] transition-colors" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7" />
+          </svg>
+          <div>
+            <p class="text-xs text-[var(--color-dim)] font-[family-name:var(--font-mono)]">PREV</p>
+            <p class="text-sm text-[var(--color-muted)] group-hover:text-[var(--color-bone)] transition-colors">{prev.title}</p>
+          </div>
+        </a>
+      ) : <div />}
+      {next ? (
+        <a href={`/games/${next.slug}`} class="group flex items-center gap-3 text-right">
+          <div>
+            <p class="text-xs text-[var(--color-dim)] font-[family-name:var(--font-mono)]">NEXT</p>
+            <p class="text-sm text-[var(--color-muted)] group-hover:text-[var(--color-bone)] transition-colors">{next.title}</p>
+          </div>
+          <svg class="w-4 h-4 text-[var(--color-dim)] group-hover:text-[var(--color-phosphor)] transition-colors" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
+          </svg>
+        </a>
+      ) : <div />}
+    </nav>
+  </div>
+</BaseLayout>
+
+<script>
+  import { gsap } from 'gsap';
+  import { ScrollTrigger } from 'gsap/ScrollTrigger';
+
+  gsap.registerPlugin(ScrollTrigger);
+
+  document.querySelectorAll('.prose').forEach(section => {
+    gsap.from(section, {
+      scrollTrigger: {
+        trigger: section,
+        start: 'top 85%',
+        toggleActions: 'play none none none',
+      },
+      opacity: 0,
+      y: 20,
+      duration: 0.6,
+      ease: 'power2.out',
+    });
+  });
+</script>

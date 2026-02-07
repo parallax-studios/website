@@ -1,0 +1,49 @@
+---
+import { ClientRouter } from 'astro:transitions';
+import Header from '../components/Header.astro';
+import Footer from '../components/Footer.astro';
+import '../styles/global.css';
+
+interface Props {
+  title?: string;
+  description?: string;
+  accent?: string;
+}
+
+const {
+  title = 'Parallax Studios',
+  description = '14 games. 14 industries. Every angle.',
+  accent,
+} = Astro.props;
+
+const fullTitle = title === 'Parallax Studios' ? title : `${title} — Parallax Studios`;
+---
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="description" content={description} />
+    <meta property="og:title" content={fullTitle} />
+    <meta property="og:description" content={description} />
+    <meta property="og:type" content="website" />
+    <title>{fullTitle}</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Space+Grotesk:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap"
+      rel="stylesheet"
+    />
+    <ClientRouter />
+    {accent && <style set:html={`:root { --game-accent: ${accent}; }`} />}
+  </head>
+  <body class="min-h-screen flex flex-col">
+    <div class="crt-overlay" aria-hidden="true"></div>
+    <Header />
+    <main class="flex-1">
+      <slot />
+    </main>
+    <Footer />
+  </body>
+</html>

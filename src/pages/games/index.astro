@@ -1,0 +1,83 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import GameCard from '../../components/GameCard.astro';
+import { getAllGames } from '../../lib/games';
+
+const games = getAllGames();
+const industries = [...new Set(games.map(g => g.industry))];
+---
+
+<BaseLayout title="All Games" description="14 game concepts spanning every entertainment industry.">
+  <section class="pt-32 pb-8 px-6">
+    <div class="max-w-7xl mx-auto">
+      <span class="text-xs font-[family-name:var(--font-mono)] tracking-widest text-[var(--color-phosphor)] block mb-4">PORTFOLIO</span>
+      <h1 class="font-[family-name:var(--font-display)] text-4xl md:text-6xl font-bold mb-4">
+        All Games
+      </h1>
+      <p class="text-lg text-[var(--color-muted)] max-w-2xl">
+        14 concepts. Each one simulates an industry nobody has simulated before.
+      </p>
+    </div>
+  </section>
+
+  <!-- Filter chips -->
+  <section class="px-6 pb-12">
+    <div class="max-w-7xl mx-auto flex flex-wrap gap-2">
+      <button
+        class="filter-chip active text-xs px-4 py-1.5 rounded-full border border-[var(--color-phosphor)]/30 bg-[var(--color-phosphor)]/10 text-[var(--color-phosphor)] font-[family-name:var(--font-mono)] tracking-wider transition-all cursor-pointer"
+        data-filter="all"
+      >
+        ALL
+      </button>
+      {industries.map(industry => (
+        <button
+          class="filter-chip text-xs px-4 py-1.5 rounded-full border border-white/10 text-[var(--color-dim)] font-[family-name:var(--font-mono)] tracking-wider hover:border-white/20 hover:text-[var(--color-muted)] transition-all cursor-pointer"
+          data-filter={industry}
+        >
+          {industry.toUpperCase()}
+        </button>
+      ))}
+    </div>
+  </section>
+
+  <!-- Game grid -->
+  <section class="px-6 pb-24">
+    <div class="max-w-7xl mx-auto">
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4" id="games-grid">
+        {games.map(game => (
+          <div data-industry={game.industry}>
+            <GameCard game={game} />
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <script>
+    document.querySelectorAll('.filter-chip').forEach(chip => {
+      chip.addEventListener('click', () => {
+        const filter = (chip as HTMLElement).dataset.filter;
+
+        document.querySelectorAll('.filter-chip').forEach(c => {
+          c.classList.remove('active');
+          c.classList.remove('bg-[var(--color-phosphor)]/10', 'text-[var(--color-phosphor)]', 'border-[var(--color-phosphor)]/30');
+          c.classList.add('text-[var(--color-dim)]', 'border-white/10');
+        });
+
+        chip.classList.add('active');
+        (chip as HTMLElement).style.borderColor = 'rgba(51, 255, 102, 0.3)';
+        (chip as HTMLElement).style.backgroundColor = 'rgba(51, 255, 102, 0.1)';
+        (chip as HTMLElement).style.color = '#33ff66';
+
+        document.querySelectorAll('#games-grid > div').forEach(card => {
+          const industry = (card as HTMLElement).dataset.industry;
+          if (filter === 'all' || industry === filter) {
+            (card as HTMLElement).style.display = '';
+          } else {
+            (card as HTMLElement).style.display = 'none';
+          }
+        });
+      });
+    });
+  </script>
+</BaseLayout>

@@ -1,0 +1,143 @@
+@import "tailwindcss";
+
+@theme {
+  --color-void: #0a0a0f;
+  --color-void-light: #12121a;
+  --color-void-lighter: #1a1a28;
+  --color-phosphor: #33ff66;
+  --color-amber: #ffaa33;
+  --color-bone: #f0f0f0;
+  --color-muted: #888899;
+  --color-dim: #44445a;
+  --font-display: "Space Grotesk", system-ui, sans-serif;
+  --font-body: "Inter", system-ui, sans-serif;
+  --font-mono: "JetBrains Mono", ui-monospace, monospace;
+}
+
+/* Base reset */
+html {
+  scroll-behavior: smooth;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+body {
+  font-family: var(--font-body);
+  background-color: var(--color-void);
+  color: var(--color-bone);
+  overflow-x: hidden;
+}
+
+::selection {
+  background-color: var(--color-phosphor);
+  color: var(--color-void);
+}
+
+/* CRT Scanline Overlay */
+.crt-overlay {
+  pointer-events: none;
+  position: fixed;
+  inset: 0;
+  z-index: 9999;
+  background: repeating-linear-gradient(
+    0deg,
+    transparent,
+    transparent 2px,
+    rgba(0, 0, 0, 0.03) 2px,
+    rgba(0, 0, 0, 0.03) 4px
+  );
+  mix-blend-mode: multiply;
+}
+
+/* Phosphor glow effect */
+.glow-phosphor {
+  text-shadow: 0 0 10px rgba(51, 255, 102, 0.3), 0 0 40px rgba(51, 255, 102, 0.1);
+}
+
+.glow-accent {
+  text-shadow: 0 0 10px var(--game-accent, var(--color-phosphor)),
+               0 0 40px color-mix(in srgb, var(--game-accent, var(--color-phosphor)) 20%, transparent);
+}
+
+/* Gradient glow for cards */
+.card-glow {
+  position: relative;
+}
+
+.card-glow::before {
+  content: '';
+  position: absolute;
+  inset: -1px;
+  border-radius: inherit;
+  background: linear-gradient(135deg, var(--game-accent, var(--color-phosphor)) 0%, transparent 50%);
+  opacity: 0;
+  transition: opacity 0.4s ease;
+  z-index: -1;
+}
+
+.card-glow:hover::before {
+  opacity: 0.15;
+}
+
+/* Scroll-driven reveal base */
+.reveal {
+  opacity: 0;
+  transform: translateY(30px);
+  transition: opacity 0.8s ease, transform 0.8s ease;
+}
+
+.reveal.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* View transition names */
+::view-transition-old(game-card),
+::view-transition-new(game-card) {
+  animation-duration: 0.4s;
+}
+
+/* Markdown rendered content */
+.prose h3 {
+  font-family: var(--font-display);
+  font-size: 1.25rem;
+  font-weight: 600;
+  color: var(--color-bone);
+  margin-top: 2rem;
+  margin-bottom: 0.75rem;
+}
+
+.prose p {
+  color: var(--color-muted);
+  line-height: 1.75;
+  margin-bottom: 1rem;
+}
+
+.prose strong {
+  color: var(--color-bone);
+  font-weight: 600;
+}
+
+.prose em {
+  color: var(--color-muted);
+  font-style: italic;
+}
+
+.prose ol, .prose ul {
+  color: var(--color-muted);
+  margin-left: 1.5rem;
+  margin-bottom: 1rem;
+}
+
+.prose li {
+  margin-bottom: 0.5rem;
+  line-height: 1.7;
+}
+
+.prose blockquote {
+  border-left: 2px solid var(--game-accent, var(--color-phosphor));
+  padding-left: 1.25rem;
+  margin: 1.5rem 0;
+  color: var(--color-bone);
+  font-style: italic;
+}

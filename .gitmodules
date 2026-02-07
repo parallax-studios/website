@@ -1,0 +1,42 @@
+[submodule "games/revachol-nights"]
+	path = games/revachol-nights
+	url = https://github.com/parallax-studios/revachol-nights.git
+[submodule "games/the-machine-question"]
+	path = games/the-machine-question
+	url = https://github.com/parallax-studios/the-machine-question.git
+[submodule "games/underground"]
+	path = games/underground
+	url = https://github.com/parallax-studios/underground.git
+[submodule "games/lan-party"]
+	path = games/lan-party
+	url = https://github.com/parallax-studios/lan-party.git
+[submodule "games/newgrounds"]
+	path = games/newgrounds
+	url = https://github.com/parallax-studios/newgrounds.git
+[submodule "games/burnbook"]
+	path = games/burnbook
+	url = https://github.com/parallax-studios/burnbook.git
+[submodule "games/premiere"]
+	path = games/premiere
+	url = https://github.com/parallax-studios/premiere.git
+[submodule "games/greenlight"]
+	path = games/greenlight
+	url = https://github.com/parallax-studios/greenlight.git
+[submodule "games/backlot"]
+	path = games/backlot
+	url = https://github.com/parallax-studios/backlot.git
+[submodule "games/upfront"]
+	path = games/upfront
+	url = https://github.com/parallax-studios/upfront.git
+[submodule "games/marquee"]
+	path = games/marquee
+	url = https://github.com/parallax-studios/marquee.git
+[submodule "games/framewar"]
+	path = games/framewar
+	url = https://github.com/parallax-studios/framewar.git
+[submodule "games/deadpan"]
+	path = games/deadpan
+	url = https://github.com/parallax-studios/deadpan.git
+[submodule "games/pilot"]
+	path = games/pilot
+	url = https://github.com/parallax-studios/pilot.git

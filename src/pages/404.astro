@@ -1,0 +1,25 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+---
+
+<BaseLayout title="404 — Lost Signal" description="This page doesn't exist.">
+  <section class="min-h-[80vh] flex items-center justify-center px-6">
+    <div class="text-center">
+      <p class="font-[family-name:var(--font-mono)] text-[var(--color-phosphor)] text-sm tracking-widest mb-4">
+        ERROR 404
+      </p>
+      <h1 class="font-[family-name:var(--font-display)] text-6xl md:text-8xl font-bold mb-6 glow-phosphor">
+        LOST SIGNAL
+      </h1>
+      <p class="text-[var(--color-muted)] text-lg mb-8 max-w-md mx-auto">
+        The page you're looking for has been cancelled, shelved, or moved to a different time slot.
+      </p>
+      <a
+        href="/"
+        class="inline-block border border-[var(--color-phosphor)]/30 text-[var(--color-phosphor)] px-8 py-3 rounded-lg font-[family-name:var(--font-mono)] text-sm tracking-wider hover:bg-[var(--color-phosphor)]/10 transition-colors"
+      >
+        BACK TO HQ →
+      </a>
+    </div>
+  </section>
+</BaseLayout>

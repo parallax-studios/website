@@ -1,0 +1,156 @@
+[
+  {
+    "slug": "revachol-nights",
+    "number": "01",
+    "title": "Revachol Nights",
+    "comparable": "Dead Cells meets Disco Elysium",
+    "elevator": "A noir detective roguelite where your psyche is the build and the truth depends on who you are.",
+    "scrollStop": "I solved the same case five times. Got five different killers. All of them were right.",
+    "genre": ["Roguelite", "Detective", "Noir", "Action RPG"],
+    "industry": "Gaming",
+    "accent": "#e63946"
+  },
+  {
+    "slug": "the-machine-question",
+    "number": "02",
+    "title": "The Machine Question",
+    "comparable": "Factorio meets Disco Elysium",
+    "elevator": "A conscious factory management game where your production lines have personalities, your conveyor belts have feelings, and every optimization is a moral choice.",
+    "scrollStop": "I automated the smelting line for peak throughput. It begged me not to. I did it anyway. I haven't stopped thinking about it.",
+    "genre": ["Factory Sim", "Narrative", "Moral Choice", "Automation"],
+    "industry": "Tech / AI",
+    "accent": "#06d6a0"
+  },
+  {
+    "slug": "underground",
+    "number": "03",
+    "title": "Underground",
+    "comparable": "NFS Underground meets Def Jam meets FIFA Street meets Tony Hawk",
+    "elevator": "It's 2003 and you're a nobody — race, fight, ball, and style your way from the bottom of the city to the top of the underground.",
+    "scrollStop": "What if Need for Speed Underground, Def Jam: Fight for NY, FIFA Street, and Tony Hawk had a baby raised on Midnight Club and mixtape CDs — and it was actually ONE game?",
+    "genre": ["Racing", "Fighting", "Sports", "Multi-Genre"],
+    "industry": "Street Culture",
+    "accent": "#ff006e"
+  },
+  {
+    "slug": "lan-party",
+    "number": "04",
+    "title": "LAN Party",
+    "comparable": "Papers, Please meets Emily is Away meets The Sims",
+    "elevator": "Build your crew, burn your CDs, host the sickest LAN party in the county — a management sim where every chatroom, every pirated game, and every friend on your buddy list is powered by AI.",
+    "scrollStop": "You have 1 new message from xXDarkAngelXx... and it's about to change everything.",
+    "genre": ["Management", "Simulation", "Retro Internet", "Community"],
+    "industry": "Internet / Gaming",
+    "accent": "#3a86ff"
+  },
+  {
+    "slug": "newgrounds",
+    "number": "05",
+    "title": "Newgrounds",
+    "comparable": "Game Dev Tycoon meets Hypnospace Outlaw meets Papers, Please",
+    "elevator": "Run the internet's wildest Flash game portal. AI creators submit playable games to your site — and YOU decide what gets featured, what gets buried, and what becomes legend.",
+    "scrollStop": "Someone just submitted a stick figure fighting game to your portal. It has 4 frames of animation and a misspelled title. It's also the best game you've played all week.",
+    "genre": ["Curation", "Management", "Retro Internet", "Simulation"],
+    "industry": "Internet / Gaming",
+    "accent": "#fb5607"
+  },
+  {
+    "slug": "burnbook",
+    "number": "06",
+    "title": "Burnbook",
+    "comparable": "The Sims meets Nightcrawler",
+    "elevator": "You're the showrunner. Cast AI personalities with real desires, real breaking points, and real secrets. Manufacture drama for ratings — but the cast is alive, unpredictable, and keeping a burn book of their own.",
+    "scrollStop": "I made her cry on camera for a 2.3 ratings bump. She never forgave me. The audience never forgot.",
+    "genre": ["Reality TV", "Management", "Drama", "Simulation"],
+    "industry": "Television",
+    "accent": "#d62828"
+  },
+  {
+    "slug": "premiere",
+    "number": "07",
+    "title": "Premiere",
+    "comparable": "Game Dev Tycoon meets 30 Rock meets Mad Men",
+    "elevator": "You're a network executive in the 2000s golden age of television. Greenlight pilots, schedule your lineup, crush the competition in the ratings.",
+    "scrollStop": "Your critically acclaimed drama just lost to a CSI rerun. Again. Do you move it to Sundays or cancel it forever?",
+    "genre": ["TV Network", "Management", "Scheduling", "Tycoon"],
+    "industry": "Television",
+    "accent": "#7209b7"
+  },
+  {
+    "slug": "greenlight",
+    "number": "08",
+    "title": "Greenlight",
+    "comparable": "Game Dev Tycoon meets Crusader Kings meets Reigns",
+    "elevator": "You're a game publisher executive in the mid-2000s. AI studios pitch you games. You decide who gets funded, who gets cancelled, and who gets a sequel.",
+    "scrollStop": "I greenlit a pirate MMO in 2006 because the focus group loved it. The studio went $40 million over budget, the lead designer had a nervous breakdown on a podcast, and it scored a 58 on Metacritic. It was the best decision I ever made.",
+    "genre": ["Publisher Sim", "Management", "Strategy", "Tycoon"],
+    "industry": "Gaming",
+    "accent": "#2ec4b6"
+  },
+  {
+    "slug": "backlot",
+    "number": "09",
+    "title": "Backlot",
+    "comparable": "Game Dev Tycoon meets The Player meets Tropico",
+    "elevator": "An indie film studio simulation where every movie you make is a bet — art against commerce, ego against budget, vision against the festival jury's hangover.",
+    "scrollStop": "My lead actor went method, my DP quit over a lens disagreement, my Sundance premiere got a 12-minute standing ovation, and I still can't make payroll.",
+    "genre": ["Film Production", "Management", "Indie Film", "Tycoon"],
+    "industry": "Film",
+    "accent": "#e9c46a"
+  },
+  {
+    "slug": "upfront",
+    "number": "10",
+    "title": "Upfront",
+    "comparable": "Game Dev Tycoon meets Mad Men",
+    "elevator": "An advertising agency sim where you chase the Super Bowl, manage creative egos, and discover that the best ad you ever made is the one the client killed.",
+    "scrollStop": "My best ad had a talking chimpanzee, a retired NFL quarterback, and a joke about the internet. The client wanted a product shot with a voiceover. We compromised. America saw the chimpanzee. We won a Clio. The client fired us.",
+    "genre": ["Advertising", "Management", "Creative Direction", "Tycoon"],
+    "industry": "Advertising",
+    "accent": "#f77f00"
+  },
+  {
+    "slug": "marquee",
+    "number": "11",
+    "title": "Marquee",
+    "comparable": "Game Dev Tycoon meets The Producers",
+    "elevator": "A Broadway producer simulation where you gamble on art, wrangle egos, and chase Tony Awards in the golden age of musical theater.",
+    "scrollStop": "I greenlit a one-person experimental opera about a lighthouse keeper. It bankrupted me. It also won four Tonys. I'd do it again.",
+    "genre": ["Broadway", "Theater", "Producer Sim", "Tycoon"],
+    "industry": "Broadway / Theater",
+    "accent": "#e056a0"
+  },
+  {
+    "slug": "framewar",
+    "number": "12",
+    "title": "Framewar",
+    "comparable": "Game Dev Tycoon meets The Movies meets Pixar",
+    "elevator": "An animation studio simulation set during the CG revolution, where you greenlight films, build creative teams, and fight for box office dominance.",
+    "scrollStop": "I greenlit a hand-drawn epic about grief in 2003. It won Best Animated Feature. It also bankrupted my studio. I'd do it again.",
+    "genre": ["Animation", "Studio Management", "CG Revolution", "Tycoon"],
+    "industry": "Animation",
+    "accent": "#4cc9f0"
+  },
+  {
+    "slug": "deadpan",
+    "number": "13",
+    "title": "Deadpan",
+    "comparable": "Game Dev Tycoon meets the Comedy Store",
+    "elevator": "A stand-up comedy empire simulation where joke construction is a craft system, audiences are living ecosystems, and the mic is the loneliest place on earth.",
+    "scrollStop": "I spent forty minutes writing a bit about airport security. Killed at the Brooklyn open mic. Bombed at the college show. Got a standing ovation when I reworked the callback at 2 AM in a dive bar in Tulsa.",
+    "genre": ["Comedy", "Stand-Up", "Craft System", "Simulation"],
+    "industry": "Comedy",
+    "accent": "#ffbe0b"
+  },
+  {
+    "slug": "pilot",
+    "number": "14",
+    "title": "Pilot",
+    "comparable": "Game Dev Story meets Mad Men",
+    "elevator": "A television development sim where your taste is the mechanic, every greenlight is a gamble, and the golden age of TV is yours to build — or botch.",
+    "scrollStop": "I killed the greatest show never made because I was scared of the ratings. Then I gave its time slot to a cop procedural that ran for nine seasons. I still think about it.",
+    "genre": ["Television", "Development", "Management", "Strategy"],
+    "industry": "Television",
+    "accent": "#8338ec"
+  }
+]

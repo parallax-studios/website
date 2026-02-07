@@ -1,7 +1,5 @@
 ---
 import BaseLayout from '../../layouts/BaseLayout.astro';
-import GameHero from '../../components/GameHero.astro';
-import QuoteBlock from '../../components/QuoteBlock.astro';
 import { getAllGames, getGameContent, getAdjacentGames } from '../../lib/games';
 
 export function getStaticPaths() {
@@ -39,114 +37,121 @@ function simpleMarkdown(text: string): string {
     .replace(/^([^<\n].+)$/gm, '<p>$1</p>')
     .replace(/<p><\/p>/g, '');
 }
+
+const sectionData = [
+  { key: 'hook', label: 'The Hook', content: sections.hook },
+  { key: 'core', label: 'The Core', content: sections.core },
+  { key: 'heart', label: 'The Heart', content: sections.heart },
+  { key: 'market', label: 'The Market', content: sections.market },
+  { key: 'scope', label: 'The Scope', content: sections.scope },
+].filter(s => s.content);
 ---
 
 <BaseLayout title={meta.title} description={meta.elevator} accent={meta.accent}>
-  <GameHero game={meta} />
+  <!-- ===== HERO ===== -->
+  <section class="relative min-h-[80vh] flex flex-col justify-end px-6 md:px-10 pb-16 overflow-hidden" style={`--game-accent: ${meta.accent};`}>
+    <!-- Color wash -->
+    <div
+      class="absolute inset-0 opacity-[0.1]"
+      style={`background: radial-gradient(ellipse 70% 60% at 20% 30%, ${meta.accent} 0%, transparent 70%), radial-gradient(ellipse 50% 40% at 80% 70%, ${meta.accent}66 0%, transparent 60%);`}
+    ></div>
 
-  <!-- Scroll-stop quote -->
-  <QuoteBlock quote={meta.scrollStop} accent={meta.accent} />
-
-  <!-- Pitch Sections -->
-  <div class="max-w-4xl mx-auto px-6 space-y-16 pb-16" style={`--game-accent: ${meta.accent};`}>
-
-    {sections.hook && (
-      <section>
-        <div class="flex items-center gap-3 mb-6">
-          <span class="font-[family-name:var(--font-mono)] text-xs tracking-widest" style={`color: ${meta.accent};`}>THE HOOK</span>
-          <span class="flex-1 h-px bg-white/5"></span>
-        </div>
-        <div class="prose" set:html={simpleMarkdown(stripMarkdownMeta(sections.hook))} />
-      </section>
-    )}
-
-    {sections.core && (
-      <section>
-        <div class="flex items-center gap-3 mb-6">
-          <span class="font-[family-name:var(--font-mono)] text-xs tracking-widest" style={`color: ${meta.accent};`}>THE CORE</span>
-          <span class="flex-1 h-px bg-white/5"></span>
-        </div>
-        <div class="prose" set:html={simpleMarkdown(stripMarkdownMeta(sections.core))} />
-      </section>
-    )}
-
-    {sections.heart && (
-      <section>
-        <div class="flex items-center gap-3 mb-6">
-          <span class="font-[family-name:var(--font-mono)] text-xs tracking-widest" style={`color: ${meta.accent};`}>THE HEART</span>
-          <span class="flex-1 h-px bg-white/5"></span>
-        </div>
-        <div class="prose" set:html={simpleMarkdown(stripMarkdownMeta(sections.heart))} />
-      </section>
-    )}
-
-    {sections.market && (
-      <section>
-        <div class="flex items-center gap-3 mb-6">
-          <span class="font-[family-name:var(--font-mono)] text-xs tracking-widest" style={`color: ${meta.accent};`}>THE MARKET</span>
-          <span class="flex-1 h-px bg-white/5"></span>
-        </div>
-        <div class="prose" set:html={simpleMarkdown(stripMarkdownMeta(sections.market))} />
-      </section>
-    )}
-
-    {sections.scope && (
-      <section>
-        <div class="flex items-center gap-3 mb-6">
-          <span class="font-[family-name:var(--font-mono)] text-xs tracking-widest" style={`color: ${meta.accent};`}>THE SCOPE</span>
-          <span class="flex-1 h-px bg-white/5"></span>
-        </div>
-        <div class="prose" set:html={simpleMarkdown(stripMarkdownMeta(sections.scope))} />
-      </section>
-    )}
-
-    <!-- Document links -->
-    <section>
-      <div class="flex items-center gap-3 mb-6">
-        <span class="font-[family-name:var(--font-mono)] text-xs tracking-widest" style={`color: ${meta.accent};`}>DOCUMENTS</span>
-        <span class="flex-1 h-px bg-white/5"></span>
+    <div class="relative max-w-5xl">
+      <!-- Breadcrumb -->
+      <div class="flex items-center gap-3 mb-8">
+        <span class="font-[family-name:var(--font-label)] text-[10px] tracking-[0.35em] uppercase" style={`color: ${meta.accent};`}>
+          Game {meta.number}
+        </span>
+        <span class="w-6 h-px" style={`background: ${meta.accent};`}></span>
+        <span class="font-[family-name:var(--font-label)] text-[10px] tracking-[0.2em] uppercase text-[var(--color-smoke)]">
+          {meta.industry}
+        </span>
       </div>
-      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3">
+
+      <!-- Title -->
+      <h1
+        class="font-[family-name:var(--font-headline)] text-[11vw] md:text-[7vw] lg:text-[5vw] font-900 leading-[0.88] tracking-[-0.02em] text-[var(--color-cream)] mb-6"
+        transition:name={`game-title-${meta.slug}`}
+      >
+        {meta.title}
+      </h1>
+
+      <!-- Comparable -->
+      <p class="font-[family-name:var(--font-ui)] text-lg md:text-xl font-500 mb-4" style={`color: ${meta.accent};`}>
+        {meta.comparable}
+      </p>
+
+      <!-- Elevator -->
+      <p class="font-[family-name:var(--font-body)] text-lg text-[var(--color-fog)] leading-relaxed max-w-2xl italic">
+        {meta.elevator}
+      </p>
+    </div>
+  </section>
+
+  <!-- ===== SCROLL-STOP QUOTE ===== -->
+  <section class="px-6 md:px-10 py-20 md:py-28 border-y border-[var(--color-ash)]/30" style={`--game-accent: ${meta.accent};`}>
+    <div class="max-w-4xl editorial-quote">
+      <p class="font-[family-name:var(--font-headline)] text-2xl md:text-4xl lg:text-5xl font-400 italic leading-[1.2] text-[var(--color-cream)]">
+        {meta.scrollStop}
+      </p>
+    </div>
+  </section>
+
+  <!-- ===== PITCH SECTIONS as DOSSIER ===== -->
+  <div class="px-6 md:px-10 py-20 max-w-4xl" style={`--game-accent: ${meta.accent};`}>
+    {sectionData.map((section, i) => (
+      <section class="mb-20">
+        <div class="flex items-center gap-4 mb-10">
+          <span class="font-[family-name:var(--font-label)] text-[10px] tracking-[0.35em] uppercase" style={`color: ${meta.accent};`}>
+            {section.label}
+          </span>
+          <span class="flex-1 h-px bg-[var(--color-ash)]/30"></span>
+        </div>
+        <div class="dossier">
+          <div class="prose" set:html={simpleMarkdown(stripMarkdownMeta(section.content))} />
+        </div>
+      </section>
+    ))}
+
+    <!-- ===== DOCUMENTS ===== -->
+    <section class="mb-20">
+      <div class="flex items-center gap-4 mb-10">
+        <span class="font-[family-name:var(--font-label)] text-[10px] tracking-[0.35em] uppercase" style={`color: ${meta.accent};`}>
+          Documents
+        </span>
+        <span class="flex-1 h-px bg-[var(--color-ash)]/30"></span>
+      </div>
+      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-px bg-[var(--color-ash)]/20">
         {docs.map(doc => (
           <div
             class:list={[
-              'block rounded-lg border p-4 transition-all',
+              'p-5 transition-colors',
               doc.available
-                ? 'border-white/10 bg-[var(--color-void-light)] hover:border-white/20 hover:bg-[var(--color-void-lighter)]'
-                : 'border-white/5 bg-[var(--color-void)] opacity-40',
+                ? 'bg-[var(--color-slab)] hover:bg-[var(--color-slate)]'
+                : 'bg-[var(--color-void)] opacity-30',
             ]}
           >
-            <p class="text-sm font-medium text-[var(--color-bone)]">{doc.name}</p>
-            <p class="text-xs text-[var(--color-dim)] mt-1">
-              {doc.available ? 'Available' : 'Coming soon'}
+            <p class="font-[family-name:var(--font-ui)] text-sm font-500 text-[var(--color-chalk)] mb-1">{doc.name}</p>
+            <p class="font-[family-name:var(--font-label)] text-[9px] tracking-[0.2em] uppercase text-[var(--color-smoke)]">
+              {doc.available ? 'Available' : 'In progress'}
             </p>
           </div>
         ))}
       </div>
     </section>
 
-    <!-- Prev/Next navigation -->
-    <nav class="flex items-center justify-between pt-12 border-t border-white/5">
+    <!-- ===== PREV / NEXT ===== -->
+    <nav class="border-t border-[var(--color-ash)]/30 pt-12 grid grid-cols-2 gap-6">
       {prev ? (
-        <a href={`/games/${prev.slug}`} class="group flex items-center gap-3">
-          <svg class="w-4 h-4 text-[var(--color-dim)] group-hover:text-[var(--color-phosphor)] transition-colors" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7" />
-          </svg>
-          <div>
-            <p class="text-xs text-[var(--color-dim)] font-[family-name:var(--font-mono)]">PREV</p>
-            <p class="text-sm text-[var(--color-muted)] group-hover:text-[var(--color-bone)] transition-colors">{prev.title}</p>
-          </div>
+        <a href={`/games/${prev.slug}`} class="group">
+          <span class="block font-[family-name:var(--font-label)] text-[9px] tracking-[0.3em] uppercase text-[var(--color-ash)] mb-2">&larr; Prev</span>
+          <span class="block font-[family-name:var(--font-headline)] text-lg italic text-[var(--color-fog)] group-hover:text-[var(--color-cream)] transition-colors">{prev.title}</span>
         </a>
       ) : <div />}
       {next ? (
-        <a href={`/games/${next.slug}`} class="group flex items-center gap-3 text-right">
-          <div>
-            <p class="text-xs text-[var(--color-dim)] font-[family-name:var(--font-mono)]">NEXT</p>
-            <p class="text-sm text-[var(--color-muted)] group-hover:text-[var(--color-bone)] transition-colors">{next.title}</p>
-          </div>
-          <svg class="w-4 h-4 text-[var(--color-dim)] group-hover:text-[var(--color-phosphor)] transition-colors" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
-          </svg>
+        <a href={`/games/${next.slug}`} class="group text-right">
+          <span class="block font-[family-name:var(--font-label)] text-[9px] tracking-[0.3em] uppercase text-[var(--color-ash)] mb-2">Next &rarr;</span>
+          <span class="block font-[family-name:var(--font-headline)] text-lg italic text-[var(--color-fog)] group-hover:text-[var(--color-cream)] transition-colors">{next.title}</span>
         </a>
       ) : <div />}
     </nav>
@@ -156,20 +161,12 @@ function simpleMarkdown(text: string): string {
 <script>
   import { gsap } from 'gsap';
   import { ScrollTrigger } from 'gsap/ScrollTrigger';
-
   gsap.registerPlugin(ScrollTrigger);
 
-  document.querySelectorAll('.prose').forEach(section => {
-    gsap.from(section, {
-      scrollTrigger: {
-        trigger: section,
-        start: 'top 85%',
-        toggleActions: 'play none none none',
-      },
-      opacity: 0,
-      y: 20,
-      duration: 0.6,
-      ease: 'power2.out',
+  document.querySelectorAll('.dossier').forEach(el => {
+    gsap.from(el, {
+      scrollTrigger: { trigger: el, start: 'top 85%', toggleActions: 'play none none none' },
+      opacity: 0, x: -20, duration: 0.7, ease: 'power2.out',
     });
   });
 </script>

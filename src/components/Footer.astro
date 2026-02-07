@@ -2,20 +2,28 @@
 const year = new Date().getFullYear();
 ---
 
-<footer class="border-t border-white/5 py-12 mt-24">
-  <div class="max-w-7xl mx-auto px-6 flex flex-col md:flex-row items-center justify-between gap-4">
-    <p class="text-sm text-[var(--color-dim)]">
-      &copy; {year} Parallax Studios. 14 games. 14 industries. Every angle.
-    </p>
-    <div class="flex items-center gap-6">
+<footer class="border-t border-[var(--color-ash)]/50 mt-32">
+  <div class="px-6 md:px-10 py-16 flex flex-col md:flex-row items-start justify-between gap-10">
+    <div>
+      <p class="font-[family-name:var(--font-headline)] text-2xl italic text-[var(--color-chalk)] mb-3">
+        Parallax
+      </p>
+      <p class="font-[family-name:var(--font-label)] text-[10px] tracking-[0.25em] uppercase text-[var(--color-smoke)]">
+        14 games &middot; 14 industries &middot; Every angle
+      </p>
+    </div>
+    <div class="flex flex-col items-end gap-3">
       <a
         href="https://github.com/parallax-studios"
-        class="text-sm text-[var(--color-dim)] hover:text-[var(--color-phosphor)] transition-colors"
+        class="font-[family-name:var(--font-label)] text-[11px] tracking-[0.15em] text-[var(--color-smoke)] hover:text-[var(--color-chalk)] transition-colors uppercase"
         target="_blank"
         rel="noopener noreferrer"
       >
-        GitHub
+        GitHub &nearr;
       </a>
+      <p class="font-[family-name:var(--font-label)] text-[10px] tracking-[0.15em] text-[var(--color-ash)]">
+        &copy; {year}
+      </p>
     </div>
   </div>
 </footer>

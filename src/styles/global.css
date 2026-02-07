@@ -1,143 +1,284 @@
 @import "tailwindcss";
 
 @theme {
-  --color-void: #0a0a0f;
-  --color-void-light: #12121a;
-  --color-void-lighter: #1a1a28;
-  --color-phosphor: #33ff66;
-  --color-amber: #ffaa33;
-  --color-bone: #f0f0f0;
-  --color-muted: #888899;
-  --color-dim: #44445a;
-  --font-display: "Space Grotesk", system-ui, sans-serif;
-  --font-body: "Inter", system-ui, sans-serif;
-  --font-mono: "JetBrains Mono", ui-monospace, monospace;
+  --color-void: #08080c;
+  --color-slab: #111118;
+  --color-slate: #1b1b26;
+  --color-ash: #2a2a3a;
+  --color-smoke: #6b6b80;
+  --color-fog: #9999ad;
+  --color-chalk: #e8e4df;
+  --color-cream: #f5f1ec;
+  --font-headline: "Playfair Display", "Georgia", serif;
+  --font-body: "Source Serif 4", "Georgia", serif;
+  --font-ui: "DM Sans", system-ui, sans-serif;
+  --font-label: "IBM Plex Mono", ui-monospace, monospace;
 }
 
-/* Base reset */
+/* Foundation */
 html {
   scroll-behavior: smooth;
   -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
 }
 
 body {
   font-family: var(--font-body);
-  background-color: var(--color-void);
-  color: var(--color-bone);
+  background: var(--color-void);
+  color: var(--color-chalk);
   overflow-x: hidden;
 }
 
 ::selection {
-  background-color: var(--color-phosphor);
+  background: var(--color-cream);
   color: var(--color-void);
 }
 
-/* CRT Scanline Overlay */
-.crt-overlay {
+/* --- NOISE GRAIN TEXTURE --- */
+body::before {
+  content: '';
+  position: fixed;
+  inset: 0;
+  z-index: 9998;
   pointer-events: none;
+  opacity: 0.035;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  background-repeat: repeat;
+  background-size: 200px 200px;
+}
+
+/* --- SCANLINE (very subtle) --- */
+body::after {
+  content: '';
   position: fixed;
   inset: 0;
   z-index: 9999;
+  pointer-events: none;
   background: repeating-linear-gradient(
     0deg,
-    transparent,
-    transparent 2px,
-    rgba(0, 0, 0, 0.03) 2px,
-    rgba(0, 0, 0, 0.03) 4px
+    transparent 0px,
+    transparent 3px,
+    rgba(0,0,0,0.015) 3px,
+    rgba(0,0,0,0.015) 4px
   );
-  mix-blend-mode: multiply;
 }
 
-/* Phosphor glow effect */
-.glow-phosphor {
-  text-shadow: 0 0 10px rgba(51, 255, 102, 0.3), 0 0 40px rgba(51, 255, 102, 0.1);
-}
+/* --- SCROLLBAR --- */
+::-webkit-scrollbar { width: 6px; }
+::-webkit-scrollbar-track { background: var(--color-void); }
+::-webkit-scrollbar-thumb { background: var(--color-ash); border-radius: 3px; }
+::-webkit-scrollbar-thumb:hover { background: var(--color-smoke); }
 
-.glow-accent {
-  text-shadow: 0 0 10px var(--game-accent, var(--color-phosphor)),
-               0 0 40px color-mix(in srgb, var(--game-accent, var(--color-phosphor)) 20%, transparent);
+/* --- HORIZONTAL SCROLL CHANNEL STRIP --- */
+.channel-strip {
+  display: flex;
+  overflow-x: auto;
+  scroll-snap-type: x mandatory;
+  -webkit-overflow-scrolling: touch;
+  scrollbar-width: none;
 }
+.channel-strip::-webkit-scrollbar { display: none; }
 
-/* Gradient glow for cards */
-.card-glow {
+.channel-card {
+  flex: 0 0 100vw;
+  scroll-snap-align: start;
+  min-height: 100vh;
   position: relative;
+  display: flex;
+  align-items: flex-end;
+  padding: 6vh 8vw;
+  cursor: pointer;
+  overflow: hidden;
 }
 
-.card-glow::before {
+@media (min-width: 768px) {
+  .channel-card {
+    flex: 0 0 50vw;
+    min-height: 85vh;
+  }
+}
+
+@media (min-width: 1280px) {
+  .channel-card {
+    flex: 0 0 33.333vw;
+  }
+}
+
+.channel-card::before {
   content: '';
   position: absolute;
-  inset: -1px;
-  border-radius: inherit;
-  background: linear-gradient(135deg, var(--game-accent, var(--color-phosphor)) 0%, transparent 50%);
-  opacity: 0;
-  transition: opacity 0.4s ease;
-  z-index: -1;
+  inset: 0;
+  background: linear-gradient(
+    to top,
+    var(--color-void) 0%,
+    rgba(8,8,12,0.7) 40%,
+    rgba(8,8,12,0.3) 100%
+  );
+  z-index: 1;
+  transition: opacity 0.5s ease;
 }
 
-.card-glow:hover::before {
-  opacity: 0.15;
+.channel-card:hover::before {
+  background: linear-gradient(
+    to top,
+    var(--color-void) 0%,
+    rgba(8,8,12,0.5) 40%,
+    rgba(8,8,12,0.1) 100%
+  );
 }
 
-/* Scroll-driven reveal base */
-.reveal {
-  opacity: 0;
-  transform: translateY(30px);
-  transition: opacity 0.8s ease, transform 0.8s ease;
+.channel-card__bg {
+  position: absolute;
+  inset: 0;
+  opacity: 0.12;
+  transition: opacity 0.6s ease, transform 8s ease;
+  transform: scale(1.0);
 }
 
-.reveal.visible {
-  opacity: 1;
-  transform: translateY(0);
+.channel-card:hover .channel-card__bg {
+  opacity: 0.22;
+  transform: scale(1.05);
 }
 
-/* View transition names */
-::view-transition-old(game-card),
-::view-transition-new(game-card) {
-  animation-duration: 0.4s;
+.channel-card__content {
+  position: relative;
+  z-index: 2;
 }
 
-/* Markdown rendered content */
+/* --- DOSSIER STYLE (game detail) --- */
+.dossier {
+  position: relative;
+  border-left: 3px solid var(--game-accent, var(--color-smoke));
+  padding-left: 2rem;
+}
+
+.dossier::before {
+  content: '';
+  position: absolute;
+  left: -7px;
+  top: 0;
+  width: 11px;
+  height: 11px;
+  border-radius: 50%;
+  background: var(--game-accent, var(--color-smoke));
+}
+
+/* --- MARQUEE TICKER --- */
+@keyframes ticker {
+  0% { transform: translateX(0); }
+  100% { transform: translateX(-50%); }
+}
+
+.ticker-wrap {
+  overflow: hidden;
+  white-space: nowrap;
+}
+
+.ticker-content {
+  display: inline-block;
+  animation: ticker 40s linear infinite;
+}
+
+.ticker-content:hover {
+  animation-play-state: paused;
+}
+
+/* --- EDITORIAL QUOTE --- */
+.editorial-quote {
+  position: relative;
+  padding: 4rem 0;
+}
+
+.editorial-quote::before {
+  content: '\201C';
+  position: absolute;
+  top: -0.2em;
+  left: -0.15em;
+  font-family: var(--font-headline);
+  font-size: 15rem;
+  line-height: 1;
+  opacity: 0.04;
+  color: var(--game-accent, var(--color-chalk));
+  pointer-events: none;
+}
+
+/* --- PROSE RENDERING --- */
 .prose h3 {
-  font-family: var(--font-display);
-  font-size: 1.25rem;
-  font-weight: 600;
-  color: var(--color-bone);
-  margin-top: 2rem;
-  margin-bottom: 0.75rem;
+  font-family: var(--font-headline);
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: var(--color-cream);
+  margin-top: 2.5rem;
+  margin-bottom: 1rem;
+  letter-spacing: -0.01em;
 }
 
 .prose p {
-  color: var(--color-muted);
-  line-height: 1.75;
-  margin-bottom: 1rem;
+  font-family: var(--font-body);
+  color: var(--color-fog);
+  line-height: 1.85;
+  margin-bottom: 1.2rem;
+  font-size: 1.05rem;
 }
 
 .prose strong {
-  color: var(--color-bone);
-  font-weight: 600;
+  color: var(--color-cream);
+  font-weight: 700;
 }
 
 .prose em {
-  color: var(--color-muted);
   font-style: italic;
+  color: var(--color-fog);
 }
 
-.prose ol, .prose ul {
-  color: var(--color-muted);
+.prose ul, .prose ol {
+  color: var(--color-fog);
   margin-left: 1.5rem;
-  margin-bottom: 1rem;
+  margin-bottom: 1.2rem;
 }
 
 .prose li {
-  margin-bottom: 0.5rem;
-  line-height: 1.7;
+  margin-bottom: 0.6rem;
+  line-height: 1.8;
 }
 
 .prose blockquote {
-  border-left: 2px solid var(--game-accent, var(--color-phosphor));
-  padding-left: 1.25rem;
-  margin: 1.5rem 0;
-  color: var(--color-bone);
+  border-left: 2px solid var(--game-accent, var(--color-smoke));
+  padding-left: 1.5rem;
+  margin: 2rem 0;
   font-style: italic;
+  color: var(--color-chalk);
+}
+
+/* --- VIEW TRANSITIONS --- */
+::view-transition-old(game-title),
+::view-transition-new(game-title) {
+  animation-duration: 0.5s;
+  animation-timing-function: cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+/* --- TEAM CARD HOVER STAMP --- */
+.team-stamp {
+  position: relative;
+  overflow: hidden;
+}
+
+.team-stamp::after {
+  content: attr(data-catchphrase);
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  padding: 1rem 1.25rem;
+  font-family: var(--font-label);
+  font-size: 0.7rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  background: var(--color-void);
+  color: var(--color-smoke);
+  transform: translateY(100%);
+  transition: transform 0.3s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.team-stamp:hover::after {
+  transform: translateY(0);
 }

@@ -1,138 +1,188 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
-import GameCard from '../components/GameCard.astro';
 import { getAllGames } from '../lib/games';
 
 const games = getAllGames();
+const tickerText = games.map(g => `${g.title} — ${g.comparable}`).join('  ·  ') + '  ·  ';
 ---
 
 <BaseLayout>
-  <!-- Hero Section -->
-  <section class="relative min-h-screen flex items-center justify-center overflow-hidden">
-    <!-- Radial gradient background -->
-    <div class="absolute inset-0 opacity-30">
-      <div class="absolute inset-0 bg-[radial-gradient(ellipse_at_center,_rgba(51,255,102,0.08)_0%,_transparent_70%)]"></div>
-    </div>
+  <!-- ===== HERO ===== -->
+  <section class="relative h-screen flex flex-col justify-end px-6 md:px-10 pb-[12vh] overflow-hidden">
+    <!-- Big ambient gradient -->
+    <div class="absolute inset-0 bg-[radial-gradient(ellipse_80%_50%_at_50%_-20%,rgba(100,60,180,0.12),transparent)]"></div>
 
-    <div class="relative text-center px-6">
-      <h1
-        class="font-[family-name:var(--font-display)] text-7xl md:text-9xl lg:text-[10rem] font-bold tracking-tighter text-[var(--color-bone)] mb-6 hero-title"
+    <div class="relative">
+      <p
+        class="font-[family-name:var(--font-label)] text-[10px] md:text-[11px] tracking-[0.35em] uppercase text-[var(--color-smoke)] mb-6 hero-label"
+        style="opacity:0;"
       >
-        PARALLAX
+        A game design studio
+      </p>
+
+      <h1 class="hero-title" style="opacity:0;">
+        <span class="block font-[family-name:var(--font-headline)] text-[12vw] md:text-[8vw] lg:text-[6.5vw] font-900 leading-[0.85] tracking-[-0.03em] text-[var(--color-cream)]">
+          Parallax
+        </span>
+        <span class="block font-[family-name:var(--font-headline)] text-[12vw] md:text-[8vw] lg:text-[6.5vw] font-900 leading-[0.85] tracking-[-0.03em] italic text-[var(--color-smoke)]">
+          Studios
+        </span>
       </h1>
-      <p class="text-xl md:text-2xl text-[var(--color-muted)] font-[family-name:var(--font-display)] tracking-wide mb-4 hero-tagline">
-        14 games. 14 industries. Every angle.
-      </p>
-      <p class="text-sm text-[var(--color-dim)] font-[family-name:var(--font-mono)] tracking-widest hero-sub">
-        A GAME DESIGN STUDIO
-      </p>
 
-      <!-- Scroll indicator -->
-      <div class="absolute bottom-12 left-1/2 -translate-x-1/2 flex flex-col items-center gap-2 animate-bounce">
-        <span class="text-xs text-[var(--color-dim)] font-[family-name:var(--font-mono)] tracking-widest">SCROLL</span>
-        <svg class="w-4 h-4 text-[var(--color-dim)]" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 14l-7 7m0 0l-7-7m7 7V3" />
-        </svg>
+      <div class="mt-10 flex items-end gap-8 md:gap-16 hero-stats" style="opacity:0;">
+        <div>
+          <span class="font-[family-name:var(--font-headline)] text-[3rem] md:text-[4rem] font-700 leading-none text-[var(--color-chalk)]">14</span>
+          <p class="font-[family-name:var(--font-label)] text-[9px] tracking-[0.3em] uppercase text-[var(--color-smoke)] mt-1">Games</p>
+        </div>
+        <div>
+          <span class="font-[family-name:var(--font-headline)] text-[3rem] md:text-[4rem] font-700 leading-none text-[var(--color-chalk)]">14</span>
+          <p class="font-[family-name:var(--font-label)] text-[9px] tracking-[0.3em] uppercase text-[var(--color-smoke)] mt-1">Industries</p>
+        </div>
+        <p class="font-[family-name:var(--font-body)] text-[var(--color-fog)] text-base md:text-lg italic max-w-xs leading-relaxed hidden md:block">
+          Every angle.
+        </p>
       </div>
+    </div>
+
+    <!-- Scroll hint -->
+    <div class="absolute bottom-6 right-6 md:right-10 flex items-center gap-2 hero-hint" style="opacity:0;">
+      <span class="font-[family-name:var(--font-label)] text-[9px] tracking-[0.3em] uppercase text-[var(--color-ash)]">Scroll</span>
+      <span class="block w-px h-6 bg-[var(--color-ash)]"></span>
     </div>
   </section>
 
-  <!-- Game Grid Section -->
-  <section class="py-24 px-6" id="games">
-    <div class="max-w-7xl mx-auto">
-      <div class="flex items-center gap-4 mb-16">
-        <span class="text-xs font-[family-name:var(--font-mono)] tracking-widest text-[var(--color-phosphor)]">01—14</span>
-        <span class="flex-1 h-px bg-white/5"></span>
-        <h2 class="font-[family-name:var(--font-display)] text-3xl md:text-4xl font-bold">The Games</h2>
-        <span class="flex-1 h-px bg-white/5"></span>
-        <a href="/games" class="text-xs font-[family-name:var(--font-mono)] tracking-widest text-[var(--color-muted)] hover:text-[var(--color-phosphor)] transition-colors">VIEW ALL →</a>
-      </div>
-
-      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4">
-        {games.map(game => (
-          <GameCard game={game} />
-        ))}
-      </div>
+  <!-- ===== TICKER ===== -->
+  <div class="border-y border-[var(--color-ash)]/40 py-4 ticker-wrap">
+    <div class="ticker-content">
+      <span class="font-[family-name:var(--font-label)] text-[10px] tracking-[0.2em] uppercase text-[var(--color-smoke)]">
+        {tickerText}{tickerText}
+      </span>
     </div>
-  </section>
+  </div>
 
-  <!-- Studio Intro Section -->
-  <section class="py-24 px-6 border-t border-white/5">
-    <div class="max-w-4xl mx-auto text-center">
-      <span class="text-xs font-[family-name:var(--font-mono)] tracking-widest text-[var(--color-phosphor)] block mb-8">THE STUDIO</span>
-      <h2 class="font-[family-name:var(--font-display)] text-3xl md:text-5xl font-bold mb-8">
-        We look at entertainment from every angle.
+  <!-- ===== CHANNEL STRIP — HORIZONTAL SCROLL ===== -->
+  <section class="relative">
+    <div class="px-6 md:px-10 pt-20 pb-8 flex items-baseline justify-between">
+      <h2 class="font-[family-name:var(--font-headline)] text-3xl md:text-4xl italic text-[var(--color-chalk)]">
+        The Games
       </h2>
-      <p class="text-lg text-[var(--color-muted)] leading-relaxed mb-8 max-w-2xl mx-auto">
-        Parallax Studios is a game design studio with 14 concepts spanning TV, film, gaming, advertising, Broadway, comedy, animation, and street culture. Each game is a deep simulation of an industry you've never seen simulated.
+      <span class="font-[family-name:var(--font-label)] text-[10px] tracking-[0.25em] uppercase text-[var(--color-ash)] hidden md:block">
+        Scroll horizontally &rarr;
+      </span>
+    </div>
+
+    <div class="channel-strip">
+      {games.map((game, i) => (
+        <a href={`/games/${game.slug}`} class="channel-card group" style={`--ch-accent: ${game.accent};`}>
+          <!-- Colored gradient background -->
+          <div
+            class="channel-card__bg"
+            style={`background: radial-gradient(ellipse at 30% 20%, ${game.accent} 0%, transparent 60%), radial-gradient(ellipse at 80% 80%, ${game.accent}44 0%, transparent 50%);`}
+          ></div>
+
+          <div class="channel-card__content w-full">
+            <!-- Number -->
+            <span
+              class="block font-[family-name:var(--font-label)] text-[10px] tracking-[0.35em] uppercase mb-3"
+              style={`color: ${game.accent};`}
+            >
+              {game.number} / 14
+            </span>
+
+            <!-- Title -->
+            <h3
+              class="font-[family-name:var(--font-headline)] text-4xl md:text-5xl font-900 leading-[0.9] tracking-tight text-[var(--color-cream)] mb-4"
+              transition:name={`game-title-${game.slug}`}
+            >
+              {game.title}
+            </h3>
+
+            <!-- Comparable -->
+            <p class="font-[family-name:var(--font-ui)] text-sm font-500 mb-3" style={`color: ${game.accent};`}>
+              {game.comparable}
+            </p>
+
+            <!-- Elevator -->
+            <p class="font-[family-name:var(--font-body)] text-sm text-[var(--color-fog)] leading-relaxed line-clamp-3 max-w-sm">
+              {game.elevator}
+            </p>
+
+            <!-- Industry tag -->
+            <div class="mt-5 flex items-center gap-3">
+              <span class="font-[family-name:var(--font-label)] text-[9px] tracking-[0.25em] uppercase text-[var(--color-smoke)]">
+                {game.industry}
+              </span>
+              <span class="flex-1 h-px bg-[var(--color-ash)]/40"></span>
+              <span class="font-[family-name:var(--font-label)] text-[9px] tracking-[0.2em] uppercase text-[var(--color-ash)] group-hover:text-[var(--color-fog)] transition-colors">
+                Read &rarr;
+              </span>
+            </div>
+          </div>
+        </a>
+      ))}
+    </div>
+  </section>
+
+  <!-- ===== ABOUT TEASER ===== -->
+  <section class="px-6 md:px-10 py-32">
+    <div class="max-w-3xl">
+      <p class="font-[family-name:var(--font-label)] text-[10px] tracking-[0.35em] uppercase text-[var(--color-smoke)] mb-8">
+        The Studio
       </p>
-      <div class="flex items-center justify-center gap-12 text-center mb-12">
-        <div>
-          <span class="font-[family-name:var(--font-display)] text-4xl font-bold text-[var(--color-phosphor)]">14</span>
-          <p class="text-xs text-[var(--color-dim)] font-[family-name:var(--font-mono)] mt-1">GAMES</p>
-        </div>
-        <div>
-          <span class="font-[family-name:var(--font-display)] text-4xl font-bold text-[var(--color-amber)]">84</span>
-          <p class="text-xs text-[var(--color-dim)] font-[family-name:var(--font-mono)] mt-1">DOCUMENTS</p>
-        </div>
-        <div>
-          <span class="font-[family-name:var(--font-display)] text-4xl font-bold text-[var(--color-bone)]">700K+</span>
-          <p class="text-xs text-[var(--color-dim)] font-[family-name:var(--font-mono)] mt-1">WORDS</p>
-        </div>
+      <h2 class="font-[family-name:var(--font-headline)] text-3xl md:text-5xl lg:text-6xl font-700 leading-[1.05] tracking-tight text-[var(--color-cream)] mb-8">
+        We don't chase genres.<br/>
+        We chase <em class="italic text-[var(--color-fog)]">industries</em>&mdash;<br/>
+        and find the game hiding<br/>
+        inside each one.
+      </h2>
+      <div class="flex items-center gap-6">
+        <a
+          href="/studio"
+          class="font-[family-name:var(--font-label)] text-[11px] tracking-[0.2em] uppercase text-[var(--color-chalk)] border-b border-[var(--color-chalk)] pb-0.5 hover:text-[var(--color-fog)] hover:border-[var(--color-fog)] transition-colors"
+        >
+          Meet the team
+        </a>
+        <a
+          href="/games"
+          class="font-[family-name:var(--font-label)] text-[11px] tracking-[0.2em] uppercase text-[var(--color-smoke)] border-b border-[var(--color-smoke)] pb-0.5 hover:text-[var(--color-chalk)] hover:border-[var(--color-chalk)] transition-colors"
+        >
+          Browse all 14
+        </a>
       </div>
-      <a
-        href="/studio"
-        class="inline-block border border-[var(--color-phosphor)]/30 text-[var(--color-phosphor)] px-8 py-3 rounded-lg font-[family-name:var(--font-mono)] text-sm tracking-wider hover:bg-[var(--color-phosphor)]/10 transition-colors"
-      >
-        MEET THE TEAM →
-      </a>
     </div>
   </section>
 
   <script>
     import { gsap } from 'gsap';
     import { ScrollTrigger } from 'gsap/ScrollTrigger';
-
     gsap.registerPlugin(ScrollTrigger);
 
-    // Hero animation
-    gsap.from('.hero-title', {
-      opacity: 0,
-      y: 40,
-      duration: 1.2,
-      ease: 'power3.out',
-    });
+    // Hero stagger
+    gsap.to('.hero-label', { opacity: 1, y: 0, duration: 0.8, delay: 0.2, ease: 'power3.out' });
+    gsap.fromTo('.hero-title', { opacity: 0, y: 60 }, { opacity: 1, y: 0, duration: 1.2, delay: 0.4, ease: 'power3.out' });
+    gsap.to('.hero-stats', { opacity: 1, y: 0, duration: 0.8, delay: 0.9, ease: 'power3.out' });
+    gsap.to('.hero-hint', { opacity: 1, duration: 0.6, delay: 1.4 });
 
-    gsap.from('.hero-tagline', {
-      opacity: 0,
-      y: 20,
-      duration: 1,
-      delay: 0.4,
-      ease: 'power3.out',
-    });
-
-    gsap.from('.hero-sub', {
-      opacity: 0,
-      y: 20,
-      duration: 1,
-      delay: 0.7,
-      ease: 'power3.out',
-    });
-
-    // Scroll-driven reveals for game cards
-    document.querySelectorAll('.card-glow').forEach((card, i) => {
-      gsap.from(card, {
-        scrollTrigger: {
-          trigger: card,
-          start: 'top 90%',
-          toggleActions: 'play none none none',
-        },
-        opacity: 0,
-        y: 30,
-        duration: 0.6,
-        delay: (i % 4) * 0.1,
-        ease: 'power2.out',
-      });
+    // Channel cards parallax on scroll
+    document.querySelectorAll('.channel-card').forEach((card) => {
+      const bg = card.querySelector('.channel-card__bg') as HTMLElement;
+      if (bg) {
+        gsap.fromTo(bg,
+          { y: -30 },
+          {
+            y: 30,
+            ease: 'none',
+            scrollTrigger: {
+              trigger: card,
+              scroller: card.parentElement,
+              horizontal: true,
+              start: 'left right',
+              end: 'right left',
+              scrub: true,
+            }
+          }
+        );
+      }
     });
   </script>
 </BaseLayout>

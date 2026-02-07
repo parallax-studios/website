@@ -1,6 +1,5 @@
 ---
 import BaseLayout from '../../layouts/BaseLayout.astro';
-import GameCard from '../../components/GameCard.astro';
 import { getAllGames } from '../../lib/games';
 
 const games = getAllGames();
@@ -8,74 +7,99 @@ const industries = [...new Set(games.map(g => g.industry))];
 ---
 
 <BaseLayout title="All Games" description="14 game concepts spanning every entertainment industry.">
-  <section class="pt-32 pb-8 px-6">
-    <div class="max-w-7xl mx-auto">
-      <span class="text-xs font-[family-name:var(--font-mono)] tracking-widest text-[var(--color-phosphor)] block mb-4">PORTFOLIO</span>
-      <h1 class="font-[family-name:var(--font-display)] text-4xl md:text-6xl font-bold mb-4">
-        All Games
-      </h1>
-      <p class="text-lg text-[var(--color-muted)] max-w-2xl">
-        14 concepts. Each one simulates an industry nobody has simulated before.
-      </p>
-    </div>
+  <!-- Header -->
+  <section class="pt-28 pb-16 px-6 md:px-10">
+    <p class="font-[family-name:var(--font-label)] text-[10px] tracking-[0.35em] uppercase text-[var(--color-smoke)] mb-6">
+      Index
+    </p>
+    <h1 class="font-[family-name:var(--font-headline)] text-5xl md:text-7xl font-900 italic leading-[0.9] text-[var(--color-cream)]">
+      All Games
+    </h1>
   </section>
 
-  <!-- Filter chips -->
-  <section class="px-6 pb-12">
-    <div class="max-w-7xl mx-auto flex flex-wrap gap-2">
+  <!-- Filter -->
+  <section class="px-6 md:px-10 pb-10 flex flex-wrap gap-3">
+    <button
+      class="filter-btn active font-[family-name:var(--font-label)] text-[10px] tracking-[0.2em] uppercase pb-1 border-b border-[var(--color-chalk)] text-[var(--color-chalk)] transition-colors cursor-pointer"
+      data-filter="all"
+    >All</button>
+    {industries.map(ind => (
       <button
-        class="filter-chip active text-xs px-4 py-1.5 rounded-full border border-[var(--color-phosphor)]/30 bg-[var(--color-phosphor)]/10 text-[var(--color-phosphor)] font-[family-name:var(--font-mono)] tracking-wider transition-all cursor-pointer"
-        data-filter="all"
-      >
-        ALL
-      </button>
-      {industries.map(industry => (
-        <button
-          class="filter-chip text-xs px-4 py-1.5 rounded-full border border-white/10 text-[var(--color-dim)] font-[family-name:var(--font-mono)] tracking-wider hover:border-white/20 hover:text-[var(--color-muted)] transition-all cursor-pointer"
-          data-filter={industry}
+        class="filter-btn font-[family-name:var(--font-label)] text-[10px] tracking-[0.2em] uppercase pb-1 border-b border-transparent text-[var(--color-smoke)] hover:text-[var(--color-fog)] transition-colors cursor-pointer"
+        data-filter={ind}
+      >{ind}</button>
+    ))}
+  </section>
+
+  <!-- Game Table -->
+  <section class="px-6 md:px-10 pb-24">
+    <div class="border-t border-[var(--color-ash)]/40">
+      {games.map((game, i) => (
+        <a
+          href={`/games/${game.slug}`}
+          class="game-row group flex flex-col md:flex-row md:items-center gap-2 md:gap-6 py-6 border-b border-[var(--color-ash)]/20 hover:border-[var(--color-ash)]/50 transition-colors"
+          data-industry={game.industry}
         >
-          {industry.toUpperCase()}
-        </button>
+          <!-- Number -->
+          <span class="font-[family-name:var(--font-label)] text-[10px] tracking-[0.3em] uppercase w-12 flex-shrink-0" style={`color: ${game.accent};`}>
+            {game.number}
+          </span>
+
+          <!-- Title -->
+          <span
+            class="font-[family-name:var(--font-headline)] text-2xl md:text-3xl font-700 text-[var(--color-chalk)] group-hover:text-[var(--color-cream)] transition-colors flex-1 leading-tight"
+            transition:name={`game-title-${game.slug}`}
+          >
+            {game.title}
+          </span>
+
+          <!-- Comparable -->
+          <span class="font-[family-name:var(--font-ui)] text-sm text-[var(--color-smoke)] group-hover:text-[var(--color-fog)] transition-colors md:w-72 flex-shrink-0">
+            {game.comparable}
+          </span>
+
+          <!-- Industry -->
+          <span class="font-[family-name:var(--font-label)] text-[9px] tracking-[0.25em] uppercase text-[var(--color-ash)] group-hover:text-[var(--color-smoke)] transition-colors md:w-32 flex-shrink-0 text-right hidden md:block">
+            {game.industry}
+          </span>
+
+          <!-- Arrow -->
+          <span class="text-[var(--color-ash)] group-hover:text-[var(--color-chalk)] transition-colors hidden md:block" style={`color: ${game.accent}; opacity: 0; transition: opacity 0.3s;`}>
+            &rarr;
+          </span>
+        </a>
       ))}
     </div>
   </section>
 
-  <!-- Game grid -->
-  <section class="px-6 pb-24">
-    <div class="max-w-7xl mx-auto">
-      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4" id="games-grid">
-        {games.map(game => (
-          <div data-industry={game.industry}>
-            <GameCard game={game} />
-          </div>
-        ))}
-      </div>
-    </div>
-  </section>
-
   <script>
-    document.querySelectorAll('.filter-chip').forEach(chip => {
-      chip.addEventListener('click', () => {
-        const filter = (chip as HTMLElement).dataset.filter;
+    // Arrow show on hover
+    document.querySelectorAll('.game-row').forEach(row => {
+      const arrow = row.querySelector('span:last-child') as HTMLElement;
+      if (!arrow) return;
+      row.addEventListener('mouseenter', () => { arrow.style.opacity = '1'; });
+      row.addEventListener('mouseleave', () => { arrow.style.opacity = '0'; });
+    });
 
-        document.querySelectorAll('.filter-chip').forEach(c => {
-          c.classList.remove('active');
-          c.classList.remove('bg-[var(--color-phosphor)]/10', 'text-[var(--color-phosphor)]', 'border-[var(--color-phosphor)]/30');
-          c.classList.add('text-[var(--color-dim)]', 'border-white/10');
+    // Filtering
+    document.querySelectorAll('.filter-btn').forEach(btn => {
+      btn.addEventListener('click', () => {
+        const filter = (btn as HTMLElement).dataset.filter;
+
+        document.querySelectorAll('.filter-btn').forEach(b => {
+          (b as HTMLElement).classList.remove('active');
+          (b as HTMLElement).style.borderColor = 'transparent';
+          (b as HTMLElement).style.color = '';
+          b.classList.add('text-[var(--color-smoke)]');
         });
 
-        chip.classList.add('active');
-        (chip as HTMLElement).style.borderColor = 'rgba(51, 255, 102, 0.3)';
-        (chip as HTMLElement).style.backgroundColor = 'rgba(51, 255, 102, 0.1)';
-        (chip as HTMLElement).style.color = '#33ff66';
+        (btn as HTMLElement).classList.add('active');
+        (btn as HTMLElement).style.borderColor = '#e8e4df';
+        (btn as HTMLElement).style.color = '#e8e4df';
 
-        document.querySelectorAll('#games-grid > div').forEach(card => {
-          const industry = (card as HTMLElement).dataset.industry;
-          if (filter === 'all' || industry === filter) {
-            (card as HTMLElement).style.display = '';
-          } else {
-            (card as HTMLElement).style.display = 'none';
-          }
+        document.querySelectorAll('.game-row').forEach(row => {
+          const ind = (row as HTMLElement).dataset.industry;
+          (row as HTMLElement).style.display = (filter === 'all' || ind === filter) ? '' : 'none';
         });
       });
     });
